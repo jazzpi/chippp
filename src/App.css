@@ -52,3 +52,67 @@
   text-align: center;
   vertical-align: middle;
 }
+
+label.SearchToggle input[type="checkbox"] {
+  display: none;
+}
+
+label.SearchToggle span {
+  display: inline-block;
+  border: 1px solid #BBB;
+  border-radius:0.3rem;
+  width: 1.5rem;
+  height: 1.5rem;
+  vertical-align: middle;
+  margin: 3px;
+  position: relative;
+  transition: width 0.1s, height 0.1s, margin 0.1s;
+  filter: grayscale(80%);
+  margin: 0.25rem 0.5rem;
+  cursor: pointer;
+}
+
+label.SearchToggle :checked + span {
+  filter: grayscale(0);
+  width: 2rem;
+  height: 2rem;
+  margin: 0 0.25rem;
+}
+
+label.SearchToggle span:after {
+  display: block;
+  width: 100%;
+  height: 100%;
+  content: "";
+  background-size: 90% 90%;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+label.SearchToggle.SpotifyToggle span:after {
+  background-image: url("spotify.svg");
+}
+
+label.SearchToggle.YoutubeToggle span:after {
+  background-image: url("youtube.svg");
+}
+
+.Search {
+  width: 100%;
+}
+
+.Search .Toggles {
+  float: left;
+}
+
+.Search .SearchBar {
+  /* padding-left: 5rem; */
+  float: right;
+  width: calc(100% - 5.5rem);
+}
+
+.Search .SearchBar input {
+  width: 100%;
+  height: 2.25rem;
+  box-sizing: border-box;
+}

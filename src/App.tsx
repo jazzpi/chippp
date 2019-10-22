@@ -3,6 +3,7 @@ import logo from "./logo.svg";
 import spotify from "./spotify.svg";
 import youtube from "./youtube.svg";
 import "./App.css";
+import Search from "./Search"
 import { useTranslation } from "react-i18next";
 
 const get_img = (type: string) => type === "spotify" ? spotify : youtube;
@@ -48,6 +49,7 @@ const App: React.FC = () => {
         <h1>{t("appname")}</h1>
       </header>
       <main className="App-main">
+        <Search />
         <Queue />
         <p>
           Edit <code>src/App.tsx</code> and save to reload!

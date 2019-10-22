@@ -7,7 +7,6 @@ class WSS {
   parent: Server;
   port: number;
   wss: WebSocket.Server;
-  connections: Record<string, WebSocket>;
 
   constructor(parent: Server, port?: number) {
     this.parent = parent;
@@ -16,15 +15,13 @@ class WSS {
 
     this.wss = new WebSocket.Server({
       port: this.port,
+      clientTracking: true,
     });
-    this.wss.on("connection", (ws: WebSocket) => this.onConnection(ws))
+    this.wss.on("connection", (ws: WebSocket) => this.onConnection(ws));
     console.log("Created server at port %d", this.port);
-
-    this.connections = {};
   }
 
   onConnection(ws: WebSocket) {
-    this.connections[uuidv4()] = ws;
     ws.on("message", (message: string) => this.onMessage(ws, message));
   }
 

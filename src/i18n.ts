@@ -13,6 +13,9 @@ i18n.use(LanguageDetector).init({
           title: "Title",
           heading: "Queue",
         },
+        search: {
+          placeholder: "Add a song/video",
+        }
       }
     },
     de: {
@@ -23,6 +26,9 @@ i18n.use(LanguageDetector).init({
           title: "Titel",
           heading: "Warteliste",
         },
+        search: {
+          placeholder: "Lied/Video hinzufügen",
+        }
       }
     }
   },

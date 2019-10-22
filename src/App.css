@@ -99,6 +99,7 @@ label.SearchToggle.YoutubeToggle span:after {
 
 .Search {
   width: 100%;
+  overflow: auto; /* Prevent .Search div from collapsing */
 }
 
 .Search .Toggles {
@@ -106,13 +107,12 @@ label.SearchToggle.YoutubeToggle span:after {
 }
 
 .Search .SearchBar {
-  /* padding-left: 5rem; */
   float: right;
   width: calc(100% - 5.5rem);
 }
 
 .Search .SearchBar input {
   width: 100%;
-  height: 2.25rem;
+  height: calc(2rem + 2px);
   box-sizing: border-box;
 }

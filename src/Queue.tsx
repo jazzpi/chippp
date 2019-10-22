@@ -7,22 +7,46 @@ interface QueueElementProps {
   href: string,
 }
 
-const QueueElement: React.FC<QueueElementProps> = (props) => {
-  return (
-    <tr>
-      <td className={props.type} aria-label={props.type} />
-      <td>
-        <a href={props.href}
-          target="_blank"
-          rel="noopener noreferrer">
-          {props.title}
-        </a>
-      </td>
-    </tr>
-  );
+class QueueElement extends React.Component<QueueElementProps> {
+  render() {
+    return (
+      <tr key={this.props.href}>
+        <td className={this.props.type} aria-label={this.props.type} />
+        <td>
+          <a href={this.props.href}
+            target="_blank"
+            rel="noopener noreferrer">
+            {this.props.title}
+          </a>
+        </td>
+      </tr>
+    );
+  }
 }
 
-class Queue extends React.Component<WithTranslation> {
+interface QueueState {
+  queue: QueueElement[],
+}
+
+class Queue extends React.Component<WithTranslation, QueueState> {
+  constructor(props: WithTranslation) {
+    super(props);
+    this.state = {
+      queue: [
+        new QueueElement({
+          type: "spotify",
+          title: "ABC - DEF",
+          href: "https://example.com",
+        }),
+        new QueueElement({
+          type: "youtube",
+          title: "Cat.",
+          href: "https://example.org",
+        })
+      ],
+    };
+  }
+
   render() {
     const { t } = this.props;
     return (
@@ -36,8 +60,7 @@ class Queue extends React.Component<WithTranslation> {
             </tr>
           </thead>
           <tbody>
-            <QueueElement type="spotify" title="ABC - DEF" href="https://example.com" />
-            <QueueElement type="youtube" title="Cat." href="https://example.com" />
+            {this.state.queue.map(el => el.render())}
           </tbody>
         </table>
       </div>

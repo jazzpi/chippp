@@ -4,11 +4,12 @@ import spotify from "./spotify.svg";
 import youtube from "./youtube.svg";
 import "./App.css";
 import Search from "./Search";
-import Queue from "./Queue";
+import { Queue, QueueElementProps } from "./Queue";
 import { WithTranslation, withTranslation } from "react-i18next";
 
 interface AppState {
   sock: WebSocket,
+  queue: QueueElementProps[],
 }
 
 class App extends React.Component<WithTranslation, AppState> {
@@ -21,6 +22,7 @@ class App extends React.Component<WithTranslation, AppState> {
 
     this.state = {
       sock: sock,
+      queue: []
     }
   }
 
@@ -30,6 +32,18 @@ class App extends React.Component<WithTranslation, AppState> {
 
   sockMessage(evt: MessageEvent) {
     console.log("Sock message: %s", evt.data);
+
+    let message = JSON.parse(evt.data);
+    switch (message.type) {
+      case "queue":
+        let data = message.data as QueueElementProps[];
+        this.setState({
+          queue: data
+        });
+        break;
+      default:
+        console.error("Unknown message type %s", message.type);
+    }
   }
 
   sockSend(req_type: string, req_data?: any) {
@@ -48,7 +62,7 @@ class App extends React.Component<WithTranslation, AppState> {
         </header>
         <main className="App-main">
           <Search />
-          <Queue />
+          <Queue queue={this.state.queue} />
           <p>
             Edit <code>src/App.tsx</code> and save to reload!
           </p>

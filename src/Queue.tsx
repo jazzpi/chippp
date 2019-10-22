@@ -1,7 +1,7 @@
 import React from "react";
 import { WithTranslation, withTranslation } from "react-i18next";
 
-interface QueueElementProps {
+export interface QueueElementProps {
   type: string,
   title: string,
   href: string,
@@ -24,27 +24,17 @@ class QueueElement extends React.Component<QueueElementProps> {
   }
 }
 
-interface QueueState {
-  queue: QueueElement[],
+interface QueueProps {
+  queue: QueueElementProps[],
 }
 
-class Queue extends React.Component<WithTranslation, QueueState> {
-  constructor(props: WithTranslation) {
+class Queue extends React.Component<QueueProps & WithTranslation> {
+  constructor(props: QueueProps & WithTranslation) {
     super(props);
-    this.state = {
-      queue: [
-        new QueueElement({
-          type: "spotify",
-          title: "ABC - DEF",
-          href: "https://example.com",
-        }),
-        new QueueElement({
-          type: "youtube",
-          title: "Cat.",
-          href: "https://example.org",
-        })
-      ],
-    };
+  }
+
+  update(data: object) {
+
   }
 
   render() {
@@ -60,7 +50,7 @@ class Queue extends React.Component<WithTranslation, QueueState> {
             </tr>
           </thead>
           <tbody>
-            {this.state.queue.map(el => el.render())}
+            {this.props.queue.map(el => <QueueElement {...el} />)}
           </tbody>
         </table>
       </div>
@@ -68,4 +58,6 @@ class Queue extends React.Component<WithTranslation, QueueState> {
   }
 }
 
-export default withTranslation()(Queue);
+let QueueT = withTranslation()(Queue);
+
+export { QueueT as Queue };

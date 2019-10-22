@@ -15,7 +15,7 @@ export const NowPlaying: React.FC<NowPlayingProps> = (props) => {
       <div className="Desc">{t("nowplaying.desc")}:</div>
       <div className={`Type ${props.type}`}></div>
       <div className="PlayStatus">
-        <a className={props.status}></a>
+        <a className={props.status} href="#"></a>
       </div>
       <div className="Title">
         <a href={props.href}

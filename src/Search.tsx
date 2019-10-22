@@ -1,5 +1,5 @@
 import React from "react";
-import { WithTranslation, withTranslation, useTranslation } from "react-i18next";
+import { WithTranslation, withTranslation } from "react-i18next";
 
 interface SearchToggleProps {
   className: string,
@@ -34,7 +34,7 @@ class Search extends React.Component<WithTranslation, SearchState> {
   }
 
   render() {
-    const { t, i18n } = this.props;
+    const { t } = this.props;
     return (
       <div className="Search">
         <div className="Toggles">

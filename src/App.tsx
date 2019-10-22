@@ -1,7 +1,7 @@
 import React from "react";
-import logo from "./logo.svg";
-import spotify from "./spotify.svg";
-import youtube from "./youtube.svg";
+import "./logo.svg";
+import "./spotify.svg";
+import "./youtube.svg";
 import "./App.css";
 import Search from "./Search";
 import { Queue, QueueElementProps } from "./Queue";
@@ -55,6 +55,7 @@ class App extends React.Component<WithTranslation, AppState> {
         this.setState({
           nowPlaying: data
         });
+        break;
       default:
         console.error("Unknown message type %s", message.type);
     }
@@ -68,7 +69,7 @@ class App extends React.Component<WithTranslation, AppState> {
   }
 
   render() {
-    const { t, i18n } = this.props;
+    const { t } = this.props;
     return (
       <div className="App">
         <header className="App-header">

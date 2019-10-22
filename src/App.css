@@ -33,6 +33,20 @@
   width: 100%;
 }
 
+.Queue table td.spotify {
+  background-image: url("spotify.svg");
+  background-size: 80% 80%;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.Queue table td.youtube {
+  background-image: url("youtube.svg");
+  background-size: 80% 80%;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
 .Queue .type {
   width: 1rem;
   text-align: center;

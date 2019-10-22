@@ -17,7 +17,7 @@ const QueueElement: React.FC<QueueElementProps> = (props) => {
   const { t, i18n } = useTranslation();
   return (
     <tr>
-      <td className="type"><img src={get_img(props.type)} alt="{t(props.type)}" /></td>
+      <td className={props.type} aria-label={props.type} />
       <td><a href={props.href} target="_blank">{props.title}</a></td>
     </tr>
   );

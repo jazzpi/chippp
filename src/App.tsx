@@ -25,10 +25,18 @@ class App extends React.Component<WithTranslation, AppState> {
   }
 
   sockOpen(evt: Event) {
+    this.sockSend("getQueue");
   }
 
   sockMessage(evt: MessageEvent) {
     console.log("Sock message: %s", evt.data);
+  }
+
+  sockSend(req_type: string, req_data?: any) {
+    this.state.sock.send(JSON.stringify({
+      type: req_type,
+      data: req_data,
+    }));
   }
 
   render() {

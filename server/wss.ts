@@ -26,22 +26,49 @@ class WSS {
   onConnection(ws: WebSocket) {
     this.connections[uuidv4()] = ws;
     ws.on("message", (message: string) => this.onMessage(ws, message));
-
-    ws.send("something");
   }
 
-  onMessage(ws: WebSocket, message: string) {
-    let response;
+  onMessage(ws: WebSocket, data: string) {
+    console.log("Sock message: %s", data);
 
-    if (message.startsWith("getQueue")) {
-      response = this.getQueue();
+    let response, message;
+    let err = false;
+
+    try {
+      message = JSON.parse(data);
+    } catch (e) {
+      err = true;
+      response = {
+        "type": "messageParsingErr",
+        "data": {
+          "type": typeof(e),
+          "err": e
+        }
+      }
+    }
+
+    if (!err) {
+      switch (message.type) {
+        case "getQueue":
+          response = this.getQueue();
+          break;
+        default:
+          console.error("Unknown message type %s", message.type);
+          response = {
+            type: "unknownMessageType",
+            data: message.type
+          }
+      }
     }
 
     ws.send(JSON.stringify(response));
   }
 
   getQueue() {
-    return this.parent.getQueue();
+    return {
+      type: "queue",
+      data: this.parent.getQueue()
+    };
   }
 }
 

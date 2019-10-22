@@ -15,6 +15,9 @@ i18n.use(LanguageDetector).init({
         },
         search: {
           placeholder: "Add a song/video",
+        },
+        nowplaying: {
+          desc: "Now Playing",
         }
       }
     },
@@ -28,6 +31,9 @@ i18n.use(LanguageDetector).init({
         },
         search: {
           placeholder: "Lied/Video hinzufügen",
+        },
+        nowplaying: {
+          desc: "Jetzt läuft",
         }
       }
     }

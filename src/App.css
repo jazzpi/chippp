@@ -116,3 +116,72 @@ label.SearchToggle.YoutubeToggle span:after {
   height: calc(2rem + 2px);
   box-sizing: border-box;
 }
+
+.NowPlaying {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background-color: #5a6376;
+  margin-bottom: 1rem;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+}
+
+.NowPlaying > div {
+  margin: 0 0.25rem;
+}
+
+.NowPlaying > div:first-child {
+  margin-left: 0;
+}
+
+.NowPlaying > div:last-child {
+  margin-right: 0;
+}
+
+.NowPlaying .Type {
+  display: inline-block;
+  width: 2rem;
+  height: 2rem;
+  background-size: 90% 90%;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.NowPlaying .Type.spotify {
+  background-image: url("spotify.svg");
+}
+
+.NowPlaying .PlayStatus {
+  height: 2rem;
+}
+
+.NowPlaying .PlayStatus a {
+  display: inline-block;
+  width: 2rem;
+  height: 2rem;
+}
+
+.NowPlaying .PlayStatus a:after {
+  display: block;
+  width: 100%;
+  height: 100%;
+  content: "";
+  background-size: 90% 90%;
+  background-position: center;
+  background-repeat: no-repeat;
+  filter: invert();
+  cursor: pointer;
+}
+
+.NowPlaying .PlayStatus a.Playing:after {
+  background-image: url("pause.svg");
+}
+
+.NowPlaying .PlayStatus a.Paused:after {
+  background-image: url("play.svg");
+}
+
+.NowPlaying .PlayStatus a.Stopped:after {
+  background-image: url("stop.svg");
+}

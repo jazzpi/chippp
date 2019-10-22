@@ -6,10 +6,23 @@ i18n.use(LanguageDetector).init({
     en: {
       translations: {
         appname: "Chips Party Player",
+        spotify: "Spotify",
+        youtube: "YouTube",
+        queue: {
+          type: "Type",
+          title: "Title",
+          heading: "Queue",
+        },
       }
     },
     de: {
       translations: {
+        queue: {
+          position: "Pos",
+          type: "Typ",
+          title: "Titel",
+          heading: "Warteliste",
+        },
       }
     }
   },
@@ -20,7 +33,7 @@ i18n.use(LanguageDetector).init({
   ns: ["translations"],
   defaultNS: "translations",
 
-  keySeparator: false,
+  keySeparator: ".",
 
   interpolation: {
     escapeValue: false,

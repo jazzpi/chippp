@@ -1,22 +1,40 @@
 .App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-}
-
-.App-header {
   background-color: #282c34;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  /* justify-content: center; */
   font-size: calc(10px + 2vmin);
   color: white;
 }
 
-.App-link {
-  color: #09d3ac;
+.App-header {
+  background-color: #6f7991;
+}
+
+.App-header {
+  padding: 0.5rem 1rem;
+
+}
+
+.App-header h1 {
+  margin: 0;
+}
+
+.App-main {
+  padding: 0.5rem 1rem;
+}
+
+.Queue img {
+  height: 1rem;
+}
+
+.Queue table {
+  width: 100%;
+}
+
+.Queue .type {
+  width: 1rem;
+  text-align: center;
+  vertical-align: middle;
 }

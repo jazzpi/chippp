@@ -1,14 +1,16 @@
 import dbus from "dbus-next";
 import assert from "assert";
+import EventEmitter from "events";
 
-import { QueueElement } from "./util";
+import { QueueElement, PlayerInterface } from "./util";
 
 const SPOTIFY_NAME = "org.mpris.MediaPlayer2.spotify";
 const MPRIS_PATH = "/org/mpris/MediaPlayer2";
 const MPRIS_IFACE = "org.mpris.MediaPlayer2.Player";
 const PROP_IFACE = "org.freedesktop.DBus.Properties";
 
-export class SpotifyInterface {
+export class SpotifyInterface extends EventEmitter implements PlayerInterface {
+  type: string;
   current_title: string;
   current_href: string;
   current_status: string;
@@ -18,13 +20,14 @@ export class SpotifyInterface {
   properties: dbus.Interface;
 
   constructor() {
+    super();
     console.log("Constructing Spotify Handler...");
+    this.type = "spotify";
     this.current_title = "Unknown Artist: Unknown Song";
     this.current_href = "#";
     this.current_status = "Stopped";
     this.bus = dbus.sessionBus();
     this.initAsync();
-
   }
 
   async initAsync() {
@@ -33,8 +36,10 @@ export class SpotifyInterface {
     this.properties = this.obj.getInterface(PROP_IFACE);
     this.properties.on("PropertiesChanged",
                        (iface, changed, invalidated) => this.propsChanged(iface, changed, invalidated));
-    (new SpotifySong("a", "b", "c"));
+    await this.updateMetadata();
+    await this.updateStatus();
     console.log("Constructed Spotify Handler!");
+    console.log(`After Construction: ${this.current_status} - ${this.current_title} (${this.current_href})`);
   }
 
   propsChanged(iface: string, changed: Record<string, dbus.Variant>, invalidated: dbus.Variant[]) {
@@ -62,6 +67,7 @@ export class SpotifyInterface {
 
     if (prev_title !== this.current_title || prev_href !== this.current_href ||
         prev_status !== this.current_status) {
+      this.emit("Changed", this);
       console.log(`After PropertiesChanged: ${this.current_status} - ${this.current_title} (${this.current_href})`);
     }
   }

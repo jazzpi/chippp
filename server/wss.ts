@@ -67,6 +67,21 @@ class WSS {
       data: this.parent.getQueue()
     };
   }
+
+  getStatus() {
+    return {
+      type: "status",
+      data: this.parent.getStatus()
+    };
+  }
+
+  emitStatus() {
+    let message = JSON.stringify(this.getStatus());
+
+    this.wss.clients.forEach((ws: WebSocket) => {
+      ws.send(message);
+    })
+  }
 }
 
 export default WSS;

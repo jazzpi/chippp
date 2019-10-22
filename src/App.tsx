@@ -19,7 +19,13 @@ const QueueElement: React.FC<QueueElementProps> = (props) => {
   return (
     <tr>
       <td className={props.type} aria-label={props.type} />
-      <td><a href={props.href} target="_blank">{props.title}</a></td>
+      <td>
+        <a href={props.href}
+          target="_blank"
+          rel="noopener noreferrer">
+          {props.title}
+        </a>
+      </td>
     </tr>
   );
 }
@@ -30,12 +36,16 @@ const Queue: React.FC = () => {
     <div className="Queue">
       <h2>{t("queue.heading")}</h2>
       <table>
-        <tr>
-          <th className="type" scope="col">{t("queue.type")}</th>
-          <th scope="col">{t("queue.title")}</th>
-        </tr>
-        <QueueElement type="spotify" title="ABC - DEF" href="https://example.com" />
-        <QueueElement type="youtube" title="Cat." href="https://example.com" />
+        <thead>
+          <tr>
+            <th className="type" scope="col">{t("queue.type")}</th>
+            <th scope="col">{t("queue.title")}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <QueueElement type="spotify" title="ABC - DEF" href="https://example.com" />
+          <QueueElement type="youtube" title="Cat." href="https://example.com" />
+        </tbody>
       </table>
     </div>
   );

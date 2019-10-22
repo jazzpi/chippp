@@ -49,6 +49,9 @@ class WSS {
         case "getQueue":
           response = this.getQueue();
           break;
+        case "getStatus":
+          response = this.getStatus();
+          break;
         default:
           console.error("Unknown message type %s", message.type);
           response = {

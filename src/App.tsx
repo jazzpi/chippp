@@ -36,6 +36,7 @@ class App extends React.Component<WithTranslation, AppState> {
 
   sockOpen(evt: Event) {
     this.sockSend("getQueue");
+    this.sockSend("getStatus");
   }
 
   sockMessage(evt: MessageEvent) {

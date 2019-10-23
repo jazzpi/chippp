@@ -69,6 +69,19 @@ class App extends React.Component<WithTranslation, AppState> {
     }));
   }
 
+  updateFromStatus(status: string) {
+    switch (status) {
+      case "Playing":
+        this.sockSend("pause");
+        break;
+      case "Paused":
+        this.sockSend("play");
+        break;
+      default:
+        console.error(`Unknown status ${status}`);
+    }
+  }
+
   render() {
     const { t } = this.props;
     return (
@@ -77,7 +90,8 @@ class App extends React.Component<WithTranslation, AppState> {
           <h1>{t("appname")}</h1>
         </header>
         <main className="App-main">
-          <NowPlaying {...this.state.nowPlaying} />
+          <NowPlaying updateFromStatus={(status: string) => this.updateFromStatus(status)} {...this.state.nowPlaying} />
+
           <Search />
           <Queue queue={this.state.queue} />
           <p>

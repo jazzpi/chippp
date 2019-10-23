@@ -52,11 +52,17 @@ class WSS {
         case "getStatus":
           response = this.getStatus();
           break;
+        case "pause":
+          response = this.pause();
+          break;
+        case "play":
+          response = this.play();
+          break;
         default:
           console.error("Unknown message type %s", message.type);
           response = {
-            type: "unknownMessageType",
-            data: message.type
+            type: "error",
+            data: `Unknown message type: ${message.type}`
           }
       }
     }
@@ -76,6 +82,20 @@ class WSS {
       type: "status",
       data: this.parent.getStatus()
     };
+  }
+
+  pause() {
+    return {
+      type: "error",
+      data: "Pause failed"
+    }
+  }
+
+  play() {
+    return {
+      type: "error",
+      data: "Play failed"
+    }
   }
 
   emitStatus() {

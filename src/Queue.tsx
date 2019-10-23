@@ -29,10 +29,6 @@ interface QueueProps {
 }
 
 class Queue extends React.Component<QueueProps & WithTranslation> {
-  update(data: object) {
-
-  }
-
   render() {
     const { t } = this.props;
     return (

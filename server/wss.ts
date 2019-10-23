@@ -106,6 +106,14 @@ class WSS {
       ws.send(message);
     })
   }
+
+  emitQueue() {
+    let message = JSON.stringify(this.getQueue());
+
+    this.wss.clients.forEach((ws: WebSocket) => {
+      ws.send(message);
+    })
+  }
 }
 
 export default WSS;

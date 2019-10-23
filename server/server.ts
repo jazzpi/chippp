@@ -8,6 +8,7 @@ class Server {
   queue: QueueElement[];
   spotify: SpotifyInterface;
   activePlayer: PlayerInterface;
+  current_href: string;
 
   constructor(wssPort?: number) {
     if (wssPort === undefined) wssPort = 8080;
@@ -16,8 +17,13 @@ class Server {
     this.queue = [
       new SpotifySong(
         "Brutus: Drive",
-        "https://open.spotify.com/track/4nABlTrsl6CCdAM45tgRrQ?si=KEp1moRyT7qie-lr2GohSA",
+        "https://open.spotify.com/track/4nABlTrsl6CCdAM45tgRrQ",
         "spotify:track:4nABlTrsl6CCdAM45tgRrQ"
+      ),
+      new SpotifySong(
+        "Blood Command: S01E02.Return.Of.The.Arsonist.720p.HDTV.x264",
+        "https://open.spotify.com/track/4wGI9mWsQA6KMkS92NMTeY",
+        "spotify:track:4wGI9mWsQA6KMkS92NMTeY"
       ),
       {
         "type": "youtube",
@@ -28,6 +34,7 @@ class Server {
     this.spotify = new SpotifyInterface();
     this.spotify.on("Changed", (iface: PlayerInterface) => this.playerChanged(iface));
     this.activePlayer = this.spotify;
+    this.current_href = "";
   }
 
   getQueue() {
@@ -43,9 +50,27 @@ class Server {
     };
   }
 
-  playerChanged(iface: PlayerInterface) {
+  async playerChanged(iface: PlayerInterface) {
     console.log(`Player ${iface.type} changed`);
+    if (iface.current_href !== this.current_href) {
+      console.log(`${iface.current_href} != ${this.current_href}`);
+      await this.playNext();
+      this.wss.emitQueue();
+    }
     this.wss.emitStatus();
+  }
+
+  async playNext() {
+    let next = this.queue.shift();
+    this.current_href = next.href;
+    if (next.type === "spotify") {
+      this.activePlayer = this.spotify;
+    } else {
+      console.error(`Unknown player type: ${next.type}`)
+      throw Error("Unknown player type");
+    }
+
+    return this.activePlayer.playNow(next);
   }
 
   async play() {

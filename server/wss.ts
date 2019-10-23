@@ -25,7 +25,7 @@ class WSS {
     ws.on("message", (message: string) => this.onMessage(ws, message));
   }
 
-  onMessage(ws: WebSocket, data: string) {
+  async onMessage(ws: WebSocket, data: string) {
     console.log("Sock message: %s", data);
 
     let response, message;
@@ -53,10 +53,10 @@ class WSS {
           response = this.getStatus();
           break;
         case "pause":
-          response = this.pause();
+          response = await this.pause();
           break;
         case "play":
-          response = this.play();
+          response = await this.play();
           break;
         default:
           console.error("Unknown message type %s", message.type);
@@ -84,17 +84,18 @@ class WSS {
     };
   }
 
-  pause() {
+  async pause() {
+    console.log("Pausing...")
+    await this.parent.pause();
     return {
-      type: "error",
-      data: "Pause failed"
+      type: "paused"
     }
   }
 
-  play() {
+  async play() {
+    await this.parent.play();
     return {
-      type: "error",
-      data: "Play failed"
+      type: "played"
     }
   }
 

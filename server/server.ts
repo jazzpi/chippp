@@ -47,6 +47,14 @@ class Server {
     console.log(`Player ${iface.type} changed`);
     this.wss.emitStatus();
   }
+
+  async play() {
+    return this.activePlayer.play();
+  }
+
+  async pause() {
+    return this.activePlayer.pause();
+  }
 }
 
 new Server();

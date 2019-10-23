@@ -100,6 +100,14 @@ export class SpotifyInterface extends EventEmitter implements PlayerInterface {
   async playNow(song: SpotifySong) {
     await this.player.OpenUri(song.uri);
   }
+
+  async play() {
+    await this.player.Play();
+  }
+
+  async pause() {
+    await this.player.Pause();
+  }
 }
 
 export class SpotifySong implements QueueElement {

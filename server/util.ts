@@ -9,4 +9,6 @@ export interface PlayerInterface {
   current_title: string,
   current_href: string,
   current_status: string,
+  async play(): void,
+  async pause(): void,
 }

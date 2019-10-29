@@ -35,6 +35,15 @@ class Server {
     this.spotify.on("Changed", (iface: PlayerInterface) => this.playerChanged(iface));
     this.activePlayer = this.spotify;
     this.current_href = "";
+    this.initAsync();
+  }
+
+  async initAsync() {
+    console.log("Initializing async...");
+    await this.activePlayer.waitInit();
+    this.current_href = this.activePlayer.current_href;
+    console.log("Active Player is done!");
+    console.log(`this: ${this.current_href}, spot: ${this.activePlayer.current_href}`);
   }
 
   getQueue() {
@@ -66,7 +75,7 @@ class Server {
     if (next.type === "spotify") {
       this.activePlayer = this.spotify;
     } else {
-      console.error(`Unknown player type: ${next.type}`)
+      console.error(`Unknown player type: ${next.type}`);
       throw Error("Unknown player type");
     }
 

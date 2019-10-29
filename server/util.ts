@@ -9,7 +9,9 @@ export interface PlayerInterface {
   current_title: string,
   current_href: string,
   current_status: string,
-  async playNow(song: QueueElement): void;
+  async playNow(song: QueueElement): void,
   async play(): void,
   async pause(): void,
+  async update(): void,
+  async waitInit(): void,
 }

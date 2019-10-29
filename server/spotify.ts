@@ -18,6 +18,7 @@ export class SpotifyInterface extends EventEmitter implements PlayerInterface {
   obj: dbus.ProxyObject;
   player: dbus.Interface;
   properties: dbus.Interface;
+  initialized: boolean;
 
   constructor() {
     super();
@@ -27,6 +28,7 @@ export class SpotifyInterface extends EventEmitter implements PlayerInterface {
     this.current_href = "#";
     this.current_status = "Stopped";
     this.bus = dbus.sessionBus();
+    this.initialized = false;
     this.initAsync();
   }
 
@@ -36,10 +38,22 @@ export class SpotifyInterface extends EventEmitter implements PlayerInterface {
     this.properties = this.obj.getInterface(PROP_IFACE);
     this.properties.on("PropertiesChanged",
                        (iface, changed, invalidated) => this.propsChanged(iface, changed, invalidated));
-    await this.updateMetadata();
-    await this.updateStatus();
+    await this.update();
     console.log("Constructed Spotify Handler!");
     console.log(`After Construction: ${this.current_status} - ${this.current_title} (${this.current_href})`);
+    this.initialized = true;
+  }
+
+  async waitInit() {
+    if (this.initialized) {
+      return;
+    }
+
+    let is_initialized = (resolve) => {
+      if (this.initialized) resolve(true);
+      else setTimeout(is_initialized, 100, resolve);
+    }
+    await (new Promise(resolve => is_initialized(resolve)));
   }
 
   propsChanged(iface: string, changed: Record<string, dbus.Variant>, invalidated: dbus.Variant[]) {
@@ -107,6 +121,10 @@ export class SpotifyInterface extends EventEmitter implements PlayerInterface {
 
   async pause() {
     await this.player.Pause();
+  }
+
+  async update() {
+    await Promise.all([this.updateMetadata(), this.updateStatus()]);
   }
 }
 
